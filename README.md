@@ -1,1 +1,3 @@
-# Eezy-Carwash-App
+#Eezy-Carwash-APP
+
+Eezy é um webapp\ o Eezy é um app para um lava-jato/mecânica de carros no qual cadastra os clientes vinculando aos seus respectivos carros e salvo tudo em um banco de dados, neste app foi desenvolvido usando as principais ferramentas de frontend como html, css e javascript e como backend utilizando python e o pacote django | Eezy is a web app for a car wash/mechanic in which registers the customers linking to their cars and save everything in a database, this app was developed using the main frontend tools like html,css and javascript and as backend using python and the django package

@@ -1,1 +1,17 @@
-<h1>New service</h1>
+{% extends "index.html" %}
+{% load static %} 
+
+{% block 'head' %}
+    <link rel="stylesheet" href="{% static 'clientes/css/clientes.css' %}" />
+{% endblock %} 
+
+{% block 'dashboard' %}
+    <div class="container">
+        <br>
+        <br>
+        <br>
+        <!-- Trazendo o form de form.py -->
+        {{form.as_ul}}
+    </div>
+{% endblock %}
+

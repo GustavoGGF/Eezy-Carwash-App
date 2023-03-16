@@ -112,6 +112,7 @@
       <!-- TODO ajustar essa BAGAÇA -->
       <!-- adicionando dinamicamente os clientes do banco de dados -->
       {%for cliente in clientes%}
+      <option>Escolha um cliente</option>
       <option value="{{cliente.id}}">
         {{cliente.nome}} {{cliente.sobrenome}}
       </option>
@@ -136,10 +137,12 @@
         value="salvar"
         class="btn btn-success"
       />
+      <br />
       <hr style="background-color: gray" />
       <h2>Carros</h2>
       <!-- TODO botão para adicionar carro -->
-      <div id="carros"></div>
+
+      <div id="carros" class="form-carro"></div>
     </div>
   </div>
   <script src="{% static 'clientes/js/clientes.js' %}"></script>

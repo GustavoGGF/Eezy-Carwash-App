@@ -21,8 +21,9 @@ def new_service(request):
         # Validando formularioo
         if form.is_valid():
             form.save()
+            services = Service.objects.all()
             # TODO fazer uma tela de retorno direito
-            return  HttpResponse("Salvo com sucesso")
+            return render(request, 'listar_servico.html', {'services': services})
         else:
             return render(request, 'novo_servico.html', {'form': form})
 

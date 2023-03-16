@@ -98,7 +98,7 @@ def update_car(request, id):
     carro.placa = placa
     carro.ano = ano
     carro.save()
-    return HttpResponse(carro.carro)
+    return redirect(reverse('clientes')+f'?aba=att_client&id_cliete={id}')
 
 # Tela de exclusão de carro
 

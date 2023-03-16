@@ -2,5 +2,8 @@
 <link rel="stylesheet" href="{% static 'clientes/css/clientes.css' %}" />
 {% endblock %} {% block 'dashboard' %}
 <br /><br />
-<div class="container">{{servico.titulo}}</div>
+<div class="container">
+  <a href="{%url 'gerar_os' servico.identificador%}">gerar os</a
+  ><br />{{servico.titulo}}
+</div>
 {%endblock%}

@@ -17,7 +17,11 @@
     <tbody>
       {% for servico in services %}
       <tr>
-        <th>{{servico.protocol}}</th>
+        <th>
+          <a href="{% url 'servico' servico.identificador%}"
+            >{{servico.identificador}}</a
+          >
+        </th>
         <td>{{servico.titulo}}</td>
         <td>{{servico.cliente}}</td>
         <td>

@@ -1,5 +1,6 @@
 {% load static %}
-<!-- Pagina HTML -->      <!--TODO ajustar o menu, fazer os link-->
+<!-- Pagina HTML -->
+<!--TODO ajustar o menu, fazer os link-->
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
@@ -33,13 +34,13 @@
         <i class="bx bx-menu" id="btn"></i>
       </div>
       <ul class="nav-list">
-        <li>
+        <!-- <li>
           <a href="#">
             <i class="bx bx-grid-alt"></i>
             <span class="links_name">Página inicial</span>
           </a>
           <span class="tooltip">Página inicial</span>
-        </li>
+        </li> -->
         <li>
           <a href="{% url 'clientes' %}">
             <i class="bx bx-user"></i>
@@ -55,19 +56,19 @@
           <span class="tooltip">Serviços</span>
         </li>
         <li>
-          <a href="#">
+          <a href="{%url 'listar_servico'%}">
             <i class="bx bx-folder"></i>
             <span class="links_name">Agenda</span>
           </a>
           <span class="tooltip">Agenda</span>
         </li>
-        <li>
+        <!-- <li>
           <a href="#">
             <i class="bx bx-cog"></i>
             <span class="links_name">Histórico</span>
           </a>
           <span class="tooltip">Histórico</span>
-        </li>
+        </li> -->
       </ul>
     </div>
     <!-- MENU -->

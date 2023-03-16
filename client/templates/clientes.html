@@ -63,7 +63,7 @@
           >+ Adicionar um carro</span
         >
         <!-- TODO: remover carros -->
-        <div id="form-carro">
+        <div id="form-carro" class="container">
           {% for carro, placa, ano in carros%}
           <br />
           <div class="row">
@@ -108,7 +108,8 @@
   <!-- Tela de atualizar cliente -->
   <div id="att_cliente">
     <p></p>
-    <select id="client-select" onchange="data_client()" class="form-control">  <!-- TODO ajustar essa BAGAÇA -->
+    <select id="client-select" onchange="data_client()" class="form-control">
+      <!-- TODO ajustar essa BAGAÇA -->
       <!-- adicionando dinamicamente os clientes do banco de dados -->
       {%for cliente in clientes%}
       <option value="{{cliente.id}}">
@@ -136,7 +137,7 @@
         class="btn btn-success"
       />
       <hr style="background-color: gray" />
-      <h2>Carros</h2>     
+      <h2>Carros</h2>
       <!-- TODO botão para adicionar carro -->
       <div id="carros"></div>
     </div>

@@ -137,3 +137,8 @@ def update_client(request, id):
         return JsonResponse({'status': '200', 'nome': nome, 'sobrenome': sobrenome, 'email': email, 'cpf': cpf})
     except:
         return JsonResponse({'status': '500'})
+
+
+def delete_cliente(request):
+
+    return HttpResponse('teste')

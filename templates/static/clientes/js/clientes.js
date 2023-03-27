@@ -113,28 +113,28 @@ function data_client() {
 
 function add_new_car() {}
 
-function exlude_cliente() {
-  alerta = document.createElement("div");
+// function exlude_cliente() {
+//   alerta = document.createElement("div");
 
-  home = document.getElementById("home");
+//   home = document.getElementById("home");
 
-  att = document.getElementById("att_cliente");
+//   att = document.getElementById("att_cliente");
 
-  att.classList.add("blur");
+//   att.classList.add("blur");
 
-  alerta.classList.add("alert");
-  alerta.setAttribute("id", "alerta");
+//   alerta.classList.add("alert");
+//   alerta.setAttribute("id", "alerta");
 
-  nome = document.getElementById("nome").value;
-  sobrenome = document.getElementById("sobrenome").value;
-  cpf = document.getElementById("cpf").value;
+//   nome = document.getElementById("nome").value;
+//   sobrenome = document.getElementById("sobrenome").value;
+//   cpf = document.getElementById("cpf").value;
 
-  text = `<button class="btn btn-danger w-25 cancel" onclick="cancel()">X</button><h3 style="margin-top: 50px">Você tem certeza que deseja excluir</h3><br/><h4>Nome: ${nome} ${sobrenome}</h4><br/><h3>Portador do CPF:</h3<br/><p>${cpf}</p><br/><br/><button class="btn btn-danger w-50">SIM</button>`;
+//   text = `<button class="btn btn-danger w-25 cancel" onclick="cancel()">X</button><h3 style="margin-top: 50px">Você tem certeza que deseja excluir</h3><br/><h4>Nome: ${nome} ${sobrenome}</h4><br/><h3>Portador do CPF:</h3<br/><p>${cpf}</p><br/><br/><input class="btn btn-danger w-50" type="submit" value="SIM"/>`;
 
-  alerta.innerHTML += text;
+//   alerta.innerHTML += text;
 
-  home.appendChild(alerta);
-}
+//   home.appendChild(alerta);
+// }
 
 function cancel() {
   dom = document.getElementById("alerta");

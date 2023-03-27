@@ -111,8 +111,8 @@
     <select id="client-select" onchange="data_client()" class="form-control">
       <!-- TODO ajustar essa BAGAÇA -->
       <!-- adicionando dinamicamente os clientes do banco de dados -->
-      {%for cliente in clientes%}
       <option>Escolha um cliente</option>
+      {%for cliente in clientes%}
       <option value="{{cliente.id}}">
         {{cliente.nome}} {{cliente.sobrenome}}
       </option>
@@ -131,13 +131,30 @@
       <p>CPF:</p>
       <input id="cpf" type="text" class="form-control" />
       <br />
-      <input
-        onclick="update_client()"
-        type="submit"
-        value="salvar"
-        class="btn btn-success"
-      />
+      <div class="d-flex flex-column w-25 p-3">
+        <input
+          onclick="update_client()"
+          type="submit"
+          value="salvar"
+          class="btn btn-success"
+        />
+        <button class="btn btn-info" onclick="add_new_car()">
+          Adicionar Carro
+        </button>
+        <button
+          class="btn btn-warning"
+          style="margin-top: 10px"
+          onclick="exlude_cliente()"
+        >
+          Excluir cliente
+        </button>
+        <div id="message"></div>
+      </div>
       <br />
+      <div
+        id="add_ncar"
+        class="d-flex flex-column bd-highlight justify-content-center align-items-center"
+      ></div>
       <hr style="background-color: gray" />
       <h2>Carros</h2>
       <!-- TODO botão para adicionar carro -->

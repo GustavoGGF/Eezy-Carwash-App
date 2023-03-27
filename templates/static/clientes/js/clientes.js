@@ -76,7 +76,7 @@ function data_client() {
       // inserindo os dados no html dos carros
       for (i = 0; i < data["carro"].length; i++) {
         div_car.innerHTML +=
-          "<form action='/clientes/update_carro/" +
+          "<form id='update_car' action='/clientes/update_carro/" +
           data["carro"][i]["id"] +
           "' method='POST'>\
         <div class='row'>\
@@ -109,6 +109,39 @@ function data_client() {
     })
     // O catch são os erros
     .catch((err) => console.log(err));
+}
+
+function add_new_car() {}
+
+function exlude_cliente() {
+  alerta = document.createElement("div");
+
+  home = document.getElementById("home");
+
+  att = document.getElementById("att_cliente");
+
+  att.classList.add("blur");
+
+  alerta.classList.add("alert");
+  alerta.setAttribute("id", "alerta");
+
+  nome = document.getElementById("nome").value;
+  sobrenome = document.getElementById("sobrenome").value;
+  cpf = document.getElementById("cpf").value;
+
+  text = `<button class="btn btn-danger w-25 cancel" onclick="cancel()">X</button><h3 style="margin-top: 50px">Você tem certeza que deseja excluir</h3><br/><h4>Nome: ${nome} ${sobrenome}</h4><br/><h3>Portador do CPF:</h3<br/><p>${cpf}</p><br/><br/><button class="btn btn-danger w-50">SIM</button>`;
+
+  alerta.innerHTML += text;
+
+  home.appendChild(alerta);
+}
+
+function cancel() {
+  dom = document.getElementById("alerta");
+  att = document.getElementById("att_cliente");
+  att.classList.remove("blur");
+
+  dom.remove();
 }
 
 // Função de atualizar cliente

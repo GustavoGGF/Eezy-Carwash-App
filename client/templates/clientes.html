@@ -131,21 +131,17 @@
       <p>CPF:</p>
       <input id="cpf" type="text" class="form-control" />
       <br />
-      <div class="d-flex flex-column w-25 p-3">
+      <div class="p-3 d-flex justify-content-between">
         <input
           onclick="update_client()"
           type="submit"
           value="salvar"
-          class="btn btn-success"
+          class="btn btn-success h-25"
         />
-        <button class="btn btn-info" onclick="add_new_car()">
+        <button class="btn btn-info h-25" onclick="add_new_car()">
           Adicionar Carro
         </button>
-        <button
-          class="btn btn-warning"
-          style="margin-top: 10px"
-          onclick="exlude_cliente()"
-        >
+        <button class="btn btn-warning h-25" onclick="exlude_cliente()">
           Excluir cliente
         </button>
       </div>
@@ -169,15 +165,20 @@
   <!-- <div id="></div> -->
   <div
     id="message"
-    class="hidden message position-absolute mx-auto container-fluid"
+    class="hidden message position-absolute w-50 container-fluid"
   >
-    <h3>Você deseja excluir o cliente:</h3>
+    <div>
+      <button class="btn btn-danger cancel" onclick="cancel()" type="button">
+        X
+      </button>
+      <h4 style="margin-right: 20px">Você deseja excluir o cliente:</h4>
+    </div>
     <p id="exludeName"></p>
-    <h3>Portador do CPF:</h3>
+    <h4>Portador do CPF:</h4>
     <p id="excludeCPF"></p>
     <input
       id="exludeBtn"
-      class="btn btn-danger w-50"
+      class="btn btn-warning w-50"
       type="submit"
       value="SIM"
     />

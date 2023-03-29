@@ -136,11 +136,11 @@ function exlude_cliente() {
 }
 
 function cancel() {
-  dom = document.getElementById("alerta");
+  dom = document.getElementById("message");
   att = document.getElementById("att_cliente");
-  att.classList.remove("blur");
+  // att.classList.remove("blur");
 
-  dom.remove();
+  dom.classList.add("hidden");
 }
 
 // Função de atualizar cliente

@@ -148,12 +148,8 @@
         >
           Excluir cliente
         </button>
-        <form action="{% url 'deletar_cliente' %}" method="POST">
-          {% csrf_token %}
-          <!-- <div id="></div> -->
-          <input class="btn btn-danger w-50" type="submit" value="SIM" />
-        </form>
       </div>
+
       <br />
       <div
         id="add_ncar"
@@ -167,5 +163,24 @@
     </div>
   </div>
   <script src="{% static 'clientes/js/clientes.js' %}"></script>
-  {% endblock %}
 </div>
+<form action="{% url 'deletar_cliente' %}" method="POST">
+  {% csrf_token %}
+  <!-- <div id="></div> -->
+  <div
+    id="message"
+    class="hidden message position-absolute mx-auto container-fluid"
+  >
+    <h3>Você deseja excluir o cliente:</h3>
+    <p id="exludeName"></p>
+    <h3>Portador do CPF:</h3>
+    <p id="excludeCPF"></p>
+    <input
+      id="exludeBtn"
+      class="btn btn-danger w-50"
+      type="submit"
+      value="SIM"
+    />
+  </div>
+</form>
+{% endblock %}

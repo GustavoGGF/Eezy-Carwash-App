@@ -113,28 +113,27 @@ function data_client() {
 
 function add_new_car() {}
 
-// function exlude_cliente() {
-//   alerta = document.createElement("div");
+function exlude_cliente() {
+  message = document.getElementById("message");
 
-//   home = document.getElementById("home");
+  message.classList.remove("hidden");
 
-//   att = document.getElementById("att_cliente");
+  select = document.getElementById("client-select");
 
-//   att.classList.add("blur");
+  cliente = select.options[select.selectedIndex].text;
 
-//   alerta.classList.add("alert");
-//   alerta.setAttribute("id", "alerta");
+  p = document.getElementById("exludeName");
 
-//   nome = document.getElementById("nome").value;
-//   sobrenome = document.getElementById("sobrenome").value;
-//   cpf = document.getElementById("cpf").value;
+  p.innerText = cliente;
 
-//   text = `<button class="btn btn-danger w-25 cancel" onclick="cancel()">X</button><h3 style="margin-top: 50px">Você tem certeza que deseja excluir</h3><br/><h4>Nome: ${nome} ${sobrenome}</h4><br/><h3>Portador do CPF:</h3<br/><p>${cpf}</p><br/><br/><input class="btn btn-danger w-50" type="submit" value="SIM"/>`;
+  cpf = document.getElementById("cpf").value;
 
-//   alerta.innerHTML += text;
+  p2 = document.getElementById("excludeCPF");
 
-//   home.appendChild(alerta);
-// }
+  p2.innerText = cpf;
+
+  console.log(cpf);
+}
 
 function cancel() {
   dom = document.getElementById("alerta");

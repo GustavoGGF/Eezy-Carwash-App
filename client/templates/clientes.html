@@ -141,7 +141,7 @@
         <button class="btn btn-info h-25" onclick="add_new_car()">
           Adicionar Carro
         </button>
-        <button class="btn btn-warning h-25" onclick="exlude_cliente()">
+        <button class="btn btn-warning h-25" onclick="hideMessage()">
           Excluir cliente
         </button>
       </div>
@@ -160,28 +160,28 @@
   </div>
   <script src="{% static 'clientes/js/clientes.js' %}"></script>
 </div>
-<form action="{% url 'deletar_cliente' %}" method="POST">
-  {% csrf_token %}
-  <!-- <div id="></div> -->
-  <div
-    id="message"
-    class="hidden message position-absolute w-50 container-fluid"
-  >
-    <div>
-      <button class="btn btn-danger cancel" onclick="cancel()" type="button">
-        X
-      </button>
-      <h4 style="margin-right: 20px">Você deseja excluir o cliente:</h4>
-    </div>
-    <p id="exludeName"></p>
+<!-- <div id="></div> -->
+<div id="message" class="hidden message position-absolute w-50 container-fluid">
+  <div>
+    <button class="btn btn-danger cancel" onclick="cancel()" type="button">
+      X
+    </button>
+    <h4 style="margin-right: 20px">Você deseja excluir o cliente:</h4>
+  </div>
+  <div class="d-flex flex-column">
+    <input class="inputExlude" id="exludeName" name="nome" value="" disabled />
     <h4>Portador do CPF:</h4>
-    <p id="excludeCPF"></p>
+    <input class="inputExlude" id="excludeCPF" name="cpf" value="" disabled />
+    <input id="excludeSobrenome" value="" />
+    <input id="excludeEmail" value="" />
+    <input id="excludeId" value="" />
     <input
       id="exludeBtn"
-      class="btn btn-warning w-50"
+      class="btn btn-warning"
       type="submit"
       value="SIM"
+      onclick="exlude_cliente()"
     />
   </div>
-</form>
+</div>
 {% endblock %}

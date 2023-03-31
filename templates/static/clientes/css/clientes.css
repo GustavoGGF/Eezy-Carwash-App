@@ -67,6 +67,12 @@
   display: none;
 }
 
+#excludeSobrenome,
+#excludeEmail,
+#excludeId {
+  display: none;
+}
+
 .message {
   background: rgba(80, 62, 62, 1);
   position: absolute;
@@ -77,6 +83,14 @@
   text-align: center;
   border-radius: 10px;
   padding: 10px;
+}
+
+.inputExlude {
+  background: transparent;
+  color: #fff;
+  border: none;
+  text-align: center;
+  margin: 10px;
 }
 
 @media (max-width: 580px) {

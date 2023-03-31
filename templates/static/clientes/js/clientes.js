@@ -33,7 +33,7 @@ function show_form(type) {
 function data_client() {
   select = document.getElementById("client-select");
   value = select.options[select.selectedIndex].value;
-  console.log(value);
+
   // Esse é o Token, chave de tudo
   csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
   id_cliente = value;
@@ -66,6 +66,17 @@ function data_client() {
       email.value = data["cliente"]["email"];
       cpf.value = data["cliente"]["cpf"];
       nome.value = data["cliente"]["nome"];
+
+      exlcludename = document.getElementById("exludeName");
+      exlcludename.value = data["cliente"]["nome"];
+      escludecpf = document.getElementById("excludeCPF");
+      escludecpf.value = data["cliente"]["cpf"];
+      escludesobrenome = document.getElementById("excludeSobrenome");
+      escludesobrenome.value = data["cliente"]["sobrenome"];
+      escludeemail = document.getElementById("excludeEmail");
+      escludeemail.value = data["cliente"]["email"];
+      excludeid = document.getElementById("excludeId");
+      excludeid.value = data["client_id"];
 
       // pegando onde vai ficar o html dos carros
       div_car = document.getElementById("carros");
@@ -113,32 +124,56 @@ function data_client() {
 
 function add_new_car() {}
 
-function exlude_cliente() {
+function hideMessage() {
   message = document.getElementById("message");
 
   message.classList.remove("hidden");
-
-  select = document.getElementById("client-select");
-
-  cliente = select.options[select.selectedIndex].text;
-
-  p = document.getElementById("exludeName");
-
-  p.innerText = cliente;
-
-  cpf = document.getElementById("cpf").value;
-
-  p2 = document.getElementById("excludeCPF");
-
-  p2.innerText = cpf;
-
-  console.log(cpf);
 }
 
+// função para criar a tela de excluir cliente
+// id = document.getElementById("excludeId").value;
+function exlude_cliente() {
+  // pegando dados do input
+  nome = document.getElementById("exludeName").value;
+  sobrenome = document.getElementById("excludeSobrenome").value;
+  email = document.getElementById("excludeEmail").value;
+  cpf = document.getElementById("excludeCPF").value;
+  id = document.getElementById("excludeId").value;
+  // mandando os dados para view update_cliente, com metodo de deletar
+  fetch("/clientes/update_cliente/" + id, {
+    method: "DELETE",
+    headers: {
+      "X-CSRFToken": csrf_token,
+    },
+    body: JSON.stringify({
+      nome: nome,
+      sobrenome: sobrenome,
+      email: email,
+      cpf: cpf,
+    }),
+  })
+    .then(function (result) {
+      return result.json();
+    })
+    // Pegando os dados do back e trazendo pro front
+    .then(function (data) {
+      if (data["status"] == "200") {
+        nome = data["nome"];
+        sobrenome = data["sobrenome"];
+        email = data["email"];
+        cpf = data["cpf"];
+        console.log("Dados alterados com sucesso"); //TODO atualizar e deixa com o cliente atualizado selecionado no select
+      } else {
+        console.log("Ocorreu um erro inesperado no servidor de dados");
+      }
+    })
+    .catch((err) => console.log(err));
+}
+
+// funcão que cancela botão de excluir cliente
 function cancel() {
   dom = document.getElementById("message");
   att = document.getElementById("att_cliente");
-  // att.classList.remove("blur");
 
   dom.classList.add("hidden");
 }

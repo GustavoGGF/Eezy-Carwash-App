@@ -59,25 +59,23 @@ def clientes(request):
 # Tela de atualização de cliente
 
 
-def att_client(request):
-    # selecionando o cliente que veio do select
-    id_client = request.POST.get('id_cliente')
-    cliente = Cliente.objects.filter(id=id_client)
-    carros = Carro.objects.filter(cliente=cliente[0])
+def att_client(request):        
+        # selecionando o cliente que veio do select
+        id_client = request.POST.get('id_cliente')
+        cliente = Cliente.objects.filter(id=id_client)
+        carros = Carro.objects.filter(cliente=cliente[0])
 
-    # Juntando todos os dados do cliente
-    client_id = json.loads(serializers.serialize('json', cliente))[0]['pk']
-    cliente_json = json.loads(serializers.serialize('json', cliente))[
-        0]['fields']
-    carros_json = json.loads(serializers.serialize('json', carros))
-    carros_json = [{'fields': carro['fields'], 'id':carro['pk']}
-                   for carro in carros_json]
-    data = {'cliente': cliente_json,
-            'carro': carros_json, 'client_id': client_id}
-    # Retornando para o front os dados
-    print(client_id)
-    return JsonResponse(data)
-
+        # Juntando todos os dados do cliente
+        client_id = json.loads(serializers.serialize('json', cliente))[0]['pk']
+        cliente_json = json.loads(serializers.serialize('json', cliente))[
+            0]['fields']
+        carros_json = json.loads(serializers.serialize('json', carros))
+        carros_json = [{'fields': carro['fields'], 'id':carro['pk']}
+                    for carro in carros_json]
+        data = {'cliente': cliente_json,
+                'carro': carros_json, 'client_id': client_id}
+        # Retornando para o front os dados
+        return JsonResponse(data)
 
 # Tela de atualização do carro do cliente
 
@@ -116,29 +114,33 @@ def exclude_car(request, id):
 
 
 def update_client(request, id):
-    # Pegando os dados que veio da function update_client do front
-    body = json.loads(request.body)
+        
+    if request.method == 'DELETE':
+        body = json.loads(request.body)
 
-    # pegando os dados do json
-    # get_object_or_404 vai verificar se o id do que veio da def é o mesmo que veio do json,
-    # caso for o código roda normal, se não da erro 404
-    cliente = get_object_or_404(Cliente, id=id)
-    nome = body['nome']
-    sobrenome = body['sobrenome']
-    email = body['email']
-    cpf = body['cpf']
-    # Mandando os dados para o front via djson, mandando status junto para o código saber como rodar
-    try:
-        cliente.nome = nome
-        cliente.sobrenome = sobrenome
-        cliente.email = email  # TODO verificar se os dados estão corretos
-        cliente.cpf = cpf
-        cliente.save()
-        return JsonResponse({'status': '200', 'nome': nome, 'sobrenome': sobrenome, 'email': email, 'cpf': cpf})
-    except:
-        return JsonResponse({'status': '500'})
+        print(body)
 
+        return HttpResponse('teste')
+    
+    elif request.method == 'POST':
+        # Pegando os dados que veio da function update_client do front
+        body = json.loads(request.body)
 
-def delete_cliente(request):
-
-    return HttpResponse('teste')
+        # pegando os dados do json
+        # get_object_or_404 vai verificar se o id do que veio da def é o mesmo que veio do json,
+        # caso for o código roda normal, se não da erro 404
+        cliente = get_object_or_404(Cliente, id=id)
+        nome = body['nome']
+        sobrenome = body['sobrenome']
+        email = body['email']
+        cpf = body['cpf']
+        # Mandando os dados para o front via djson, mandando status junto para o código saber como rodar
+        try:
+            cliente.nome = nome
+            cliente.sobrenome = sobrenome
+            cliente.email = email  # TODO verificar se os dados estão corretos
+            cliente.cpf = cpf
+            cliente.save()
+            return JsonResponse({'status': '200', 'nome': nome, 'sobrenome': sobrenome, 'email': email, 'cpf': cpf})
+        except:
+            return JsonResponse({'status': '500'})

@@ -147,10 +147,14 @@
       </div>
 
       <br />
-      <div
+      <form
         id="add_ncar"
-        class="d-flex flex-column bd-highlight justify-content-center align-items-center"
-      ></div>
+        class="text-center"
+        action="{% url 'novo_carro' %}"
+        method="POST"
+      >
+        {% csrf_token %}
+      </form>
       <hr style="background-color: gray" />
       <h2>Carros</h2>
       <!-- TODO botão para adicionar carro -->

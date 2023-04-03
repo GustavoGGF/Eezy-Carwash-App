@@ -1,9 +1,11 @@
+// Função para remover a lista de cadastro de carro na tela de cadastro de cliente
 function remove_car(id) {
   var item = document.getElementById(id);
 
   item.remove();
 }
 
+// Função de adicionar a tela de input de carros na tela de cadastro de cliente
 function add_carro() {
   idv = Date.now();
   cont = document.getElementById("form-carro");
@@ -78,6 +80,8 @@ function data_client() {
       excludeid = document.getElementById("excludeId");
       excludeid.value = data["client_id"];
 
+      console.log(data);
+
       // pegando onde vai ficar o html dos carros
       div_car = document.getElementById("carros");
 
@@ -122,7 +126,93 @@ function data_client() {
     .catch((err) => console.log(err));
 }
 
-function add_new_car() {}
+// Remove o formulario de adicionar carro na tela de atualização de cliente
+function canceladdcar() {
+  div1 = document.getElementById("div1");
+  div2 = document.getElementById("div2");
+
+  div1.remove();
+  div2.remove();
+}
+
+function newcar() {
+  carro = document.getElementById("ncarro").value;
+  placa = document.getElementById("nplaca").value;
+  ano = document.getElementById("nano").value;
+  csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  id = document.getElementById("client-select").value;
+
+  // PRimeiro mandar os dados do cliente, fazer a identificação
+}
+
+// função para adicionar um novo carro para um cliente já cadastrado
+function add_new_car() {
+  // Criando os elementos
+  input1 = document.createElement("input");
+  input2 = document.createElement("input");
+  input3 = document.createElement("input");
+  btn1 = document.createElement("input");
+  btn2 = document.createElement("input");
+  // Adicioanndo as classes necessarias
+  input1.classList.add("form-control");
+  input2.classList.add("form-control");
+  input3.classList.add("form-control");
+  input1.classList.add("w-25");
+  input2.classList.add("w-25");
+  input3.classList.add("w-25");
+  btn1.classList.add("btn");
+  btn1.classList.add("btn-success");
+  btn1.classList.add("w-100");
+  btn2.classList.add("w-100");
+  btn2.classList.add("btn");
+  btn2.classList.add("btn-danger");
+  btn2.classList.add("margin-bot");
+  // Adicionando as propriedades necessarias
+  btn1.value = "Salvar";
+  // btn1.type = "submit";
+  btn2.value = "Cancelar";
+  btn2.type = "submit";
+  input1.placeholder = "carro";
+  input1.name = "carro";
+  input1.setAttribute("id", "ncarro");
+  input2.placeholder = "placa";
+  input2.name = "placa";
+  input2.setAttribute("id", "nplaca");
+  input3.placeholder = "ano";
+  input3.name = "ano";
+  input3.setAttribute("id", "nano");
+  input3.type = "number";
+  // Atribuindo na tela
+  html = document.getElementById("add_ncar");
+
+  div = document.createElement("div");
+  div2 = document.createElement("div");
+  div.setAttribute("id", "div1");
+  div2.setAttribute("id", "div2");
+  // colocando uma function
+  btn1.addEventListener("click", newcar);
+  btn2.addEventListener("click", canceladdcar);
+
+  div.classList.add("d-flex");
+  div.classList.add("flex-row");
+  div.classList.add("bd-highlight");
+  div.classList.add("justify-content-between");
+  div2.classList.add("d-flex");
+  div2.classList.add("flex-row");
+  div2.classList.add("bd-highlight");
+  div2.classList.add("justify-content-between");
+  div2.classList.add("margin-bot");
+
+  div.appendChild(input1);
+  div.appendChild(input2);
+  div.appendChild(input3);
+
+  div2.appendChild(btn1);
+  div2.appendChild(btn2);
+
+  html.appendChild(div);
+  html.appendChild(div2);
+}
 
 function hideMessage() {
   message = document.getElementById("message");
@@ -139,6 +229,7 @@ function exlude_cliente() {
   email = document.getElementById("excludeEmail").value;
   cpf = document.getElementById("excludeCPF").value;
   id = document.getElementById("excludeId").value;
+  csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
   // mandando os dados para view update_cliente, com metodo de deletar
   fetch("/clientes/update_cliente/" + id, {
     method: "DELETE",
@@ -190,6 +281,7 @@ function update_client() {
   email = document.getElementById("email").value;
   cpf = document.getElementById("cpf").value;
   id = document.getElementById("id").value;
+  csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
 
   // Mandando para o back end
   fetch("/clientes/update_cliente/" + id, {

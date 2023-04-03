@@ -151,3 +151,11 @@ def update_client(request, id):
             return JsonResponse({'status': '200', 'nome': nome, 'sobrenome': sobrenome, 'email': email, 'cpf': cpf})
         except:
             return JsonResponse({'status': '500'})
+
+
+def new_car(request):
+    if request.method == 'GET':
+    
+        cliente = Cliente.objects.filter(id=id)
+
+        print(cliente)

@@ -93,6 +93,10 @@
   margin: 10px;
 }
 
+.margin-bot {
+  margin-bottom: 50px;
+}
+
 @media (max-width: 580px) {
   .message {
     left: 20%;

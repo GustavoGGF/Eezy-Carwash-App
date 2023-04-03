@@ -114,13 +114,20 @@ def exclude_car(request, id):
 
 
 def update_client(request, id):
-        
+    
+    # Se a requisição for para deletar, executara o código a seguir
+
     if request.method == 'DELETE':
+        # Carrega os dados json
         body = json.loads(request.body)
+        # Vinculando o id
+        ide = body['id']
+        # Vinculando o id ao cliente
+        # cliente = get_object_or_404(Cliente, id=ide)
 
-        print(body)
+        Cliente.objects.filter(id=ide).delete()
 
-        return HttpResponse('teste')
+        return render(request, 'clientes.html')
     
     elif request.method == 'POST':
         # Pegando os dados que veio da function update_client do front

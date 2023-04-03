@@ -150,6 +150,7 @@ function exlude_cliente() {
       sobrenome: sobrenome,
       email: email,
       cpf: cpf,
+      id: id,
     }),
   })
     .then(function (result) {
@@ -162,12 +163,15 @@ function exlude_cliente() {
         sobrenome = data["sobrenome"];
         email = data["email"];
         cpf = data["cpf"];
+        id = data["id"];
         console.log("Dados alterados com sucesso"); //TODO atualizar e deixa com o cliente atualizado selecionado no select
       } else {
         console.log("Ocorreu um erro inesperado no servidor de dados");
       }
     })
     .catch((err) => console.log(err));
+
+  window.location.reload();
 }
 
 // funcão que cancela botão de excluir cliente

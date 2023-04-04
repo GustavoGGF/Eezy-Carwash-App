@@ -136,13 +136,26 @@ function canceladdcar() {
 }
 
 function newcar() {
-  carro = document.getElementById("ncarro").value;
-  placa = document.getElementById("nplaca").value;
-  ano = document.getElementById("nano").value;
   csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
   id = document.getElementById("client-select").value;
 
-  // PRimeiro mandar os dados do cliente, fazer a identificação
+  fetch("/clientes/new_car/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: id,
+    }),
+  })
+    .then(function (result) {
+      return result.json();
+    })
+    .then(function (data) {
+      id = data["client_id"];
+      return id;
+    })
+    .catch((err) => console.log(err));
 }
 
 // função para adicionar um novo carro para um cliente já cadastrado
@@ -169,17 +182,18 @@ function add_new_car() {
   btn2.classList.add("margin-bot");
   // Adicionando as propriedades necessarias
   btn1.value = "Salvar";
-  // btn1.type = "submit";
+  btn1.type = "submit";
   btn2.value = "Cancelar";
   btn2.type = "submit";
   input1.placeholder = "carro";
-  input1.name = "carro";
+  input1.name = "ncarro";
   input1.setAttribute("id", "ncarro");
+  input1.type = "text";
   input2.placeholder = "placa";
-  input2.name = "placa";
+  input2.name = "nplaca";
   input2.setAttribute("id", "nplaca");
   input3.placeholder = "ano";
-  input3.name = "ano";
+  input3.name = "nano";
   input3.setAttribute("id", "nano");
   input3.type = "number";
   // Atribuindo na tela

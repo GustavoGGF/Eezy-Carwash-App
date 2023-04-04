@@ -152,10 +152,37 @@ def update_client(request, id):
         except:
             return JsonResponse({'status': '500'})
 
-
+@csrf_exempt
 def new_car(request):
-    if request.method == 'GET':
-    
-        cliente = Cliente.objects.filter(id=id)
 
-        print(cliente)
+    carros = request.POST.getlist('ncarro')
+    placas = request.POST.getlist('nplaca')
+    anos = request.POST.getlist('nano')
+
+    id = body['id']
+
+
+    cliente = get_object_or_404(Cliente, id=id)
+
+    try:
+        body = json.loads(request.body)
+        print('jdon valido')
+    except json.decoder.JSONDecodeError as e:
+        print('json invalido', e)
+
+    # try:
+    #     for carro, placa, ano in zip(carros, placas, anos):
+
+    #         car = Carro(
+    #             carro=carro,
+    #             placa=placa,
+    #             ano=ano,
+    #             cliente=cliente
+    #         )
+    #         print(car)
+    #         car.save()
+
+    #     # return JsonResponse({'status': '200', 'carro':carros, 'placa':placas, 'ano':anos, 'cliente':cliente})
+    #     return HttpResponse('aaa')
+    # except:
+    #     return HttpResponse('teste')

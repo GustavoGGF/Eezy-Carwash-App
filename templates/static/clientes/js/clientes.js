@@ -80,8 +80,6 @@ function data_client() {
       excludeid = document.getElementById("excludeId");
       excludeid.value = data["client_id"];
 
-      console.log(data);
-
       // pegando onde vai ficar o html dos carros
       div_car = document.getElementById("carros");
 
@@ -135,25 +133,40 @@ function canceladdcar() {
   div2.remove();
 }
 
+// Função que irá criar um novo carro para o Cliente
 function newcar() {
-  csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
-  id = document.getElementById("client-select").value;
+  // Criando as variaveis
+  const csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  var id = document.getElementById("client-select").value;
+  const carros = document.getElementsByName("ncarro");
+  const placas = document.getElementsByName("nplaca");
+  const anos = document.getElementsByName("nano");
+  // construindo formulario
+  const formData = new FormData();
 
+  // adicionando o id, carro, placa e ano
+  formData.append("id", id);
+
+  for (let i = 0; i < carros.length; i++) {
+    formData.append("ncarro", carros[i].value);
+    formData.append("nplaca", placas[i].value);
+    formData.append("nano", anos[i].value);
+  }
+  // mandando os dados pro backend, na def "newcar"
   fetch("/clientes/new_car/", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "x-CSRFToken": csrf_token,
     },
-    body: JSON.stringify({
-      id: id,
-    }),
+    body: formData,
   })
     .then(function (result) {
       return result.json();
     })
-    .then(function (data) {
-      id = data["client_id"];
-      return id;
+    .then(async function (data) {
+      await data;
+      // aqui o código espera uma resposta do back pra fazer reload na pagian com os dados salvos
+      return window.location.reload();
     })
     .catch((err) => console.log(err));
 }
@@ -182,7 +195,7 @@ function add_new_car() {
   btn2.classList.add("margin-bot");
   // Adicionando as propriedades necessarias
   btn1.value = "Salvar";
-  btn1.type = "submit";
+  // btn1.type = "submit";
   btn2.value = "Cancelar";
   btn2.type = "submit";
   input1.placeholder = "carro";

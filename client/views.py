@@ -152,37 +152,38 @@ def update_client(request, id):
         except:
             return JsonResponse({'status': '500'})
 
-@csrf_exempt
+# Função que recebe os dados da function "newcar"
 def new_car(request):
+    # se o metodo for de postar então:
+    if request.method == 'POST':
+        # pegando o id
+        try:
+            id = request.POST['id']
+        except KeyError:
+            return JsonResponse({'status': 'error', 'message': 'Missing required parameter: id'}, status=400)
+        
+        # Vinculando o cliente com o id trazido do front
+        cliente = get_object_or_404(Cliente, id=id)
 
-    carros = request.POST.getlist('ncarro')
-    placas = request.POST.getlist('nplaca')
-    anos = request.POST.getlist('nano')
+        # Pegando os dados do veiculo
+        carros = request.POST.getlist('ncarro')
+        placas = request.POST.getlist('nplaca')
+        anos = request.POST.getlist('nano')
 
-    id = body['id']
+        try:
+            # o for compacta os dados no zip e monta na model Carro
+            for carro, placa, ano in zip(carros, placas, anos):
+                car = Carro(
+                    carro = carro,
+                    placa = placa,
+                    ano = ano,
+                    cliente = cliente
+                )
+                car.save()
 
+                data = {'status': 'ok', 'carros': carros, 'placas': placas, 'anos': anos, 'cliente': id}
+            return JsonResponse(data)
 
-    cliente = get_object_or_404(Cliente, id=id)
-
-    try:
-        body = json.loads(request.body)
-        print('jdon valido')
-    except json.decoder.JSONDecodeError as e:
-        print('json invalido', e)
-
-    # try:
-    #     for carro, placa, ano in zip(carros, placas, anos):
-
-    #         car = Carro(
-    #             carro=carro,
-    #             placa=placa,
-    #             ano=ano,
-    #             cliente=cliente
-    #         )
-    #         print(car)
-    #         car.save()
-
-    #     # return JsonResponse({'status': '200', 'carro':carros, 'placa':placas, 'ano':anos, 'cliente':cliente})
-    #     return HttpResponse('aaa')
-    # except:
-    #     return HttpResponse('teste')
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+        

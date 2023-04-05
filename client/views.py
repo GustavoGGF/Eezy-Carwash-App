@@ -27,6 +27,49 @@ def clientes(request):
         placas = request.POST.getlist('placa')
         anos = request.POST.getlist('ano')
 
+        # Validando nome
+        if len(nome) < 3:
+            return render(request, 'clientes.html', {'sobrenome': sobrenome, 'email': email,'cpf':cpf, 'carros': zip(carros, placas, anos)})   
+        
+        # Validando sobrenome
+        if len(sobrenome) == 0:
+            return render(request, 'clientes.html', {'nome':nome, 'email': email,'cpf':cpf, 'carros': zip(carros, placas, anos)})   
+
+        # Remove os caracteres não númericos do cpf
+        cpf = ''.join(filter(str.isdigit, cpf))
+
+        # Verifica se tem 11 digitos
+        if len(cpf)!= 11:
+            return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'carros': zip(carros, placas, anos)})            
+        
+        # Verifica se são iguais
+        if cpf == cpf[0] * 11:
+            return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'carros': zip(carros, placas, anos)})
+        
+        # Calcula o primeiro dígito verificador
+        soma = sum(int(cpf[i]) * (10 - i) for i in range(9))
+        resto = soma % 11
+        if resto < 2:
+            digito1 = 0
+        else:
+            digito1 = 11 - resto
+    
+        # Verifica se o primeiro dígito verificador está correto
+        if digito1 != int(cpf[9]):
+            return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'carros': zip(carros, placas, anos)})
+        
+        # Calcula o segundo dígito verificador
+        soma = sum(int(cpf[i]) * (11 - i) for i in range(10))
+        resto = soma % 11
+        if resto < 2:
+            digito2 = 0
+        else:
+            digito2 = 11 - resto
+    
+        # Verifica se o segundo dígito verificador está correto
+        if digito2 != int(cpf[10]):
+            return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'carros': zip(carros, placas, anos)})
+
         # Validando se o cliente existe pelo CPF
         cliente = Cliente.objects.filter(cpf=cpf)
         if cliente.exists():
@@ -35,6 +78,8 @@ def clientes(request):
         # Validando email inserido
         if not re.fullmatch(re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'), email):
             return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'cpf': cpf, 'carros': zip(carros, placas, anos)})
+
+
 
         # Agrupando os dados do cliente
         cliente = Cliente(

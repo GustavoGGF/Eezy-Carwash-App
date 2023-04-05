@@ -7,6 +7,7 @@ function remove_car(id) {
 
 // Função de adicionar a tela de input de carros na tela de cadastro de cliente
 function add_carro() {
+  // o idv vai servir como um id para função "remove_car"
   idv = Date.now();
   cont = document.getElementById("form-carro");
 
@@ -69,6 +70,7 @@ function data_client() {
       cpf.value = data["cliente"]["cpf"];
       nome.value = data["cliente"]["nome"];
 
+      // Já antecipando os dados na tela de exclusão
       exlcludename = document.getElementById("exludeName");
       exlcludename.value = data["cliente"]["nome"];
       escludecpf = document.getElementById("excludeCPF");
@@ -241,6 +243,7 @@ function add_new_car() {
   html.appendChild(div2);
 }
 
+// Escondendo a tela de exclusão de usuario
 function hideMessage() {
   message = document.getElementById("message");
 

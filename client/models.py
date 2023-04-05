@@ -20,7 +20,7 @@ class Cliente(models.Model):
 class Carro(models.Model):
     # Defefindo quantidade maxima de caracteres
     carro = models.CharField(max_length=50)
-    placa = models.CharField(max_length=8)
+    placa = models.CharField(max_length=7)
     # Definindo que é número inteiro
     ano = models.IntegerField()
     # Definindo que é uma chave estrangeira

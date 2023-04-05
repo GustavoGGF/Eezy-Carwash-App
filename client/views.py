@@ -89,15 +89,23 @@ def clientes(request):
             cpf=cpf
         )
 
-        # Salvando a tabela cliente
-        cliente.save()
+        # Se não tiver nenhum dado inserido de carro, ai salva o cliente        
+        if len(carros) == 0 and len(placas) == 0 and len(anos) ==0:
+            cliente.save()
 
+        # Salvando a tabela cliente
+        
         # O zip serve para mesclar dados separados em grupos, assim identificando cada carro com seu respectivo cliente
         for carro, placa, ano in zip(carros, placas, anos):
-            car = Carro(carro=carro, placa=placa, ano=ano, cliente=cliente)
+            # Validando se os dados do carro foram inseridos
+            if len(carro) == 0 or len(placa) ==0 or len(ano) == 0:
+                return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome,'email':email, 'cpf': cpf, 'carros': zip(carros, placas, anos)})
+            else:
+                car = Carro(carro=carro, placa=placa, ano=ano, cliente=cliente)
 
-            # Salvando a tabela do carro
-            car.save()
+                # Salvando a tabela do carro
+                cliente.save()
+                car.save()
 
         return render(request, 'clientes.html')
 

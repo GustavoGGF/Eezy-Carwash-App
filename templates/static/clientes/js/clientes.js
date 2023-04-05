@@ -12,7 +12,7 @@ function add_carro() {
   cont = document.getElementById("form-carro");
 
   // serve para criar os inputs de cadastro de carros
-  html = `<div class='row' style="margin: 10px"  id=${idv}> <div class='col-md'> <input type='text' placeholder='carro' class='form-control' name='carro' > </div> <div class='col-md'><input type='text' placeholder='Placa' class='form-control' name='placa' ></div> <div class='col-md'> <input type='number' placeholder='ano' class='form-control' name='ano'> </div> <button class="btn btn-danger" onclick="remove_car(${idv})">X</button> </div>`;
+  html = `<div class='row' style="margin: 10px"  id=${idv}> <div class='col-md'> <input type='text' placeholder='carro' class='form-control' name='carro' > </div> <div class='col-md'><input type='text' placeholder='Placa' class='form-control' name='placa' maxlength="10"></div> <div class='col-md'> <input type='number' placeholder='ano' class='form-control' name='ano' maxlength="4"> </div> <button class="btn btn-danger" onclick="remove_car(${idv})">X</button> </div>`;
 
   // coloca os inputs na tela
   cont.innerHTML += html;

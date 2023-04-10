@@ -34,7 +34,7 @@ function show_form(type) {
 
 // função que vai atualizar os dados do cliente
 function data_client() {
-  select = document.getElementById("client-select");
+  var select = document.getElementById("client-select");
   value = select.options[select.selectedIndex].value;
 
   // Esse é o Token, chave de tudo

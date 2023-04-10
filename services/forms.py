@@ -20,6 +20,8 @@ class FormService(ModelForm):
             self.fields[field].widget.attrs.update(
                 {'placeholder': field})
 
+                
+
         # Adicionando o nome correto do titulo aos fields
         choices = list()
         for i, j in self.fields['maintenance_category'].choices:

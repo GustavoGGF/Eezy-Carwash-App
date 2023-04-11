@@ -8,15 +8,25 @@ selectService.addEventListener("change", () => {
     method: "POST",
     headers: {
       "X-CSRFToken": csrf_token,
+      "Content-Type": "application/json",
     },
-    body: id,
+    body: JSON.stringify({ id: id }),
   })
     .then(function (result) {
-      console.log("teste");
       return result.json();
     })
-    .then(function (data) {
-      return data;
+    .then(async function (data) {
+      await data;
+
+      Car_service = document.getElementById("car-service");
+
+      Car_select = document.createElement("select");
+      Car_select.classList.add("form-control");
+      Car_select.name = "carro";
+
+      Car_service.appendChild(Car_select);
+
+      console.log(data.json());
     })
     .catch((err) => {
       console.log(err);

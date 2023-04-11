@@ -23,13 +23,22 @@ def new_service(request):
 
         id = json.loads(request.body)
 
-        carros = Carro.objects.all()
+        print(id)
 
-        print(dir(carros))
-        print(carros)
+        carros = Carro.objects.all().filter(cliente_id=id['id'])
 
-        return JsonResponse({'status': 'ok'})
+        print(type(carros))
 
+        i = 0
+        carros_list = list(carros.values())
+
+        print(carros_list)
+
+        json_data = json.dumps(carros_list)
+
+        print(json_data)
+
+        return JsonResponse(json_data, safe=False)
 
 
         # form = FormService(request.POST)

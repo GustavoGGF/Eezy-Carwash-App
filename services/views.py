@@ -12,31 +12,25 @@ import json
 # Tela de novo serviço
 
 def new_service(request):
-
+    # Se for uma requisição de dados
     if request.method == "GET":
+        # Pegando a lista de clientes
         clientes_list = Cliente.objects.all
+        # Pegando as opções de categoria de manutenção
         categorias = ChoicesMaintenanceCategory.choices
-        
+        # Jogando os daos pro html em json, ai lá eu renderizo os dados pelo django
         return render(request, 'novo_servico.html', {'clientes': clientes_list,'categorias':categorias})
         
     elif request.method == "POST":
 
         id = json.loads(request.body)
 
-        print(id)
-
         carros = Carro.objects.all().filter(cliente_id=id['id'])
-
-        print(type(carros))
 
         i = 0
         carros_list = list(carros.values())
 
-        print(carros_list)
-
         json_data = json.dumps(carros_list)
-
-        print(json_data)
 
         return JsonResponse(json_data, safe=False)
 

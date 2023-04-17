@@ -18,11 +18,11 @@
     <tbody>
       {% for servico in services %}
       <tr>
-        <th>
+        <td>
           <a href="{% url 'servico' servico.identificador%}"
             >{{servico.identificador}}</a
           >
-        </th>
+        </td>
         <td>{{servico.titulo}}</td>
         <td>{{servico.cliente}}</td>
         <td>{{servico.data_inicio}}</td>
@@ -34,7 +34,14 @@
           {% endif %}
         </td>
         <td>R$ {{servico.total_price}}</td>
-        <td><button class="btn btn-danger">EXCLUIR</button></td>
+        <td>
+          <button
+            class="btn btn-danger btnService"
+            onclick="excludeService(this)"
+          >
+            EXCLUIR
+          </button>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

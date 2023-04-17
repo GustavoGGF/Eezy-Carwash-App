@@ -1,3 +1,5 @@
+const { isButtonElement } = require("react-router-dom/dist/dom");
+
 // Esse código tem como função trazer o carro do banco de dados quando seleciona o cliente
 var selectService = document.getElementById("Cliente-Service");
 
@@ -104,4 +106,20 @@ function createService() {
       console.log(data);
     })
     .catch((err) => console.log(err));
+}
+
+function excludeService(botao) {
+  var identificador = botao.parentNode.parentNode.querySelector(
+    "td:nth-of-type(1) a"
+  ).textContent;
+
+  console.log(identificador);
+
+  // fetch("/servicos/listar_servico/", {
+  //   method: "DELETE",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({}),
+  // });
 }

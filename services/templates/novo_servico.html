@@ -6,8 +6,12 @@
   <!-- Trazendo o form de form.py -->
   <form action="{%url 'novo_servico'%}" method="POST">
     {%csrf_token%}
-    <input type="text" placeholder="Titulo" class="form-control" />
-    <br />
+    <input
+      type="text"
+      id="tituloServ"
+      placeholder="Titulo"
+      class="form-control"
+    />
     <br />
     <select name="cliente" class="form-control" id="Cliente-Service">
       <option>Trocar cliente</option>
@@ -18,7 +22,6 @@
       </option>
       {%endfor%}
     </select>
-    <br />
     <br />
     <div id="car-service"></div>
     <br />
@@ -36,18 +39,18 @@
     {%endfor%}
     <div class="container d-flex flex-column align-items-center">
       <label>Data de inicio</label>
-      <input type="date" />
-      <label>Data de entrega</label>
-      <input type="date" style="margin-bottom: 10px" />
-
-      <input
-        type="submit"
-        style="margin-top: 10px"
-        class="btn btn-success w-50"
-        value="Salvar"
-      />
+      <input type="date" id="startDate" />
+      <label style="margin-top: 5px">Data de entrega</label>
+      <input type="date" style="margin-bottom: 10px" id="endDate" />
     </div>
   </form>
+  <button
+    style="margin-top: 10px"
+    class="btn btn-success d-flex mx-auto"
+    onclick="createService()"
+  >
+    Salvar
+  </button>
 </div>
 {% endblock %}
 

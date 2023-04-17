@@ -6,7 +6,6 @@ from secrets import token_hex, token_urlsafe
 
 # Classe que cria as categorias de manutenção
 
-
 class MaintenanceCategory(models.Model):
     # As categorias que aparecem aqui são importadas de ChoicesMaintenanceCategory
     titulo = models.CharField(

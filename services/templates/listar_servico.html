@@ -10,8 +10,9 @@
         <th scope="col">Identificador</th>
         <th scope="col">Título</th>
         <th scope="col">Cliente</th>
+        <th scope="col">Data</th>
         <th scope="col">Status</th>
-        <th scope="col">Preço total</th>
+        <th scope="col">Valor</th>
       </tr>
     </thead>
     <tbody>
@@ -24,11 +25,12 @@
         </th>
         <td>{{servico.titulo}}</td>
         <td>{{servico.cliente}}</td>
-        <td>
+        <td>{{servico.data_inicio}}</td>
+        <td class="d-flex justify-content-center">
           {% if servico.finalizado %}
-          <span class="badge badge-success">Finalizado</span>
+          <div id="finalizado" class="mx-auto"></div>
           {% else %}
-          <span class="badge badge-info">Em manutenção</span>
+          <div id="manutencao"></div>
           {% endif %}
         </td>
         <td>R$ {{servico.total_price}}</td>

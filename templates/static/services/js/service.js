@@ -1,31 +1,36 @@
 // Esse código tem como função trazer o carro do banco de dados quando seleciona o cliente
 var selectService = document.getElementById("Cliente-Service");
 
+// o select é ativado cada vez que o seu valor for mudado
 selectService.addEventListener("change", () => {
+  // variavel para veificar se algum cliente já foi selecionado
   if (document.getElementById("seletor-carro") !== null) {
+    // caso sim, ira remover a lista de carros e rodar novamente para não ficar sempre na tela uma lista anterior
     Car_select.remove();
     cars();
   } else {
     cars();
   }
   function cars() {
-    const id = selectService.options[selectService.selectedIndex].value;
+    // pegando o id
+    var id = selectService.options[selectService.selectedIndex].value;
     const csrf_token = document.querySelector(
       "[name=csrfmiddlewaretoken]"
     ).value;
-
     fetch("/servicos/novo_servico/", {
       method: "POST",
       headers: {
         "X-CSRFToken": csrf_token,
         "Content-Type": "application/json",
       },
+      // Jogando o id para um JSON
       body: JSON.stringify({ id: id }),
     })
       .then(function (result) {
         return result.json();
       })
       .then(async function (data) {
+        // esse código é so criando elementos na tela e colocando o nome do carro do cliente selecionado nas options
         Car_service = document.getElementById("car-service");
 
         Car_select = document.createElement("select");
@@ -58,3 +63,45 @@ selectService.addEventListener("change", () => {
       });
   }
 });
+
+function createService() {
+  // pegando o id
+  var id = selectService.options[selectService.selectedIndex].value;
+  const csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  var title = document.getElementById("tituloServ").value;
+  var servicesTypes = document.querySelectorAll('input[type="checkbox"]');
+  var startDate = document.getElementById("startDate").value;
+  var endDate = document.getElementById("endDate").value;
+  const selectCar = document.getElementById("seletor-carro");
+  var car = selectCar.options[selectCar.selectedIndex].value;
+  const servicesSelect = [];
+
+  servicesTypes.forEach(function (checkbox) {
+    if (checkbox.checked) {
+      servicesSelect.push(checkbox.value);
+    }
+  });
+
+  fetch("/servicos/listar_servico/", {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": csrf_token,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: id,
+      titulo: title,
+      servico: servicesSelect,
+      inicio_servico: startDate,
+      final_servico: endDate,
+      carro: car,
+    }),
+  })
+    .then(function (result) {
+      return result.json();
+    })
+    .then(function (data) {
+      console.log(data);
+    })
+    .catch((err) => console.log(err));
+}

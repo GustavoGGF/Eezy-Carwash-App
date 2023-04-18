@@ -1,5 +1,3 @@
-const { isButtonElement } = require("react-router-dom/dist/dom");
-
 // Esse código tem como função trazer o carro do banco de dados quando seleciona o cliente
 var selectService = document.getElementById("Cliente-Service");
 
@@ -13,6 +11,7 @@ selectService.addEventListener("change", () => {
   } else {
     cars();
   }
+
   function cars() {
     // pegando o id
     var id = selectService.options[selectService.selectedIndex].value;
@@ -42,6 +41,7 @@ selectService.addEventListener("change", () => {
         Car_select.appendChild(adjust);
         Car_select.classList.add("form-control");
         Car_select.name = "carro";
+        Car_select.required = true;
 
         carros = JSON.parse(data);
 
@@ -78,11 +78,23 @@ function createService() {
   var car = selectCar.options[selectCar.selectedIndex].value;
   const servicesSelect = [];
 
+  if (selectCar.value == "Escolha um veiculo") {
+    return;
+  }
+
+  let noneSelected = true;
+
   servicesTypes.forEach(function (checkbox) {
     if (checkbox.checked) {
       servicesSelect.push(checkbox.value);
+
+      noneSelected = false;
     }
   });
+
+  if (noneSelected) {
+    return;
+  }
 
   fetch("/servicos/listar_servico/", {
     method: "POST",
@@ -103,7 +115,7 @@ function createService() {
       return result.json();
     })
     .then(function (data) {
-      console.log(data);
+      window.location.reload();
     })
     .catch((err) => console.log(err));
 }
@@ -113,13 +125,18 @@ function excludeService(botao) {
     "td:nth-of-type(1) a"
   ).textContent;
 
-  console.log(identificador);
-
-  // fetch("/servicos/listar_servico/", {
-  //   method: "DELETE",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({}),
-  // });
+  fetch("/servicos/listar_servico/", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ identificador: identificador }),
+  })
+    .then(function (result) {
+      return result.json();
+    })
+    .then(function (data) {
+      return data;
+    })
+    .catch((err) => console.log(err));
 }

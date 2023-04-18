@@ -42,12 +42,14 @@ def list_service(request):
 
     if request.method =='POST':
         body = json.loads(request.body)
-        id = body['id']
         title = body['titulo']
         cliente = Cliente.objects.get(id=body['id'])
         servicos = list(body['servico'])
         inicio_servico = datetime.strptime(body['inicio_servico'], '%Y-%m-%d').date()
         final_servico = datetime.strptime(body['final_servico'], '%Y-%m-%d').date()
+
+        if len(title) < 1:
+            title = f'Servico para {cliente.nome} {cliente.sobrenome}'
 
         servico = Service(
             titulo = title,
@@ -60,20 +62,27 @@ def list_service(request):
 
         for serv in servicos:
             categoria = MaintenanceCategory.objects.get(titulo=serv)
-            servico.maintenance_category.add(categoria)        
+            servico.maintenance_category.add(categoria)
 
         return JsonResponse({'status': 'ok'})
-    
+
+
+        if request.method == 'DELETE':
+
+            pass
+
+            return JsonResponse({'status': 'ok'})
+
 # Tela dos serviços
 def service(request, identificador):
     service = get_object_or_404(Service, identificador=identificador)
-    
+
     return render(request, 'servico.html', {'servico': service})
 
 # Tela da geração de ordem de serviço
 def gerar_os(request, identificador):
     servico = get_object_or_404(Service, identificador=identificador)
-    
+
     # TODO estilizar melhor esse pdf
     pdf = FPDF()
     pdf.add_page()
@@ -98,7 +107,7 @@ def gerar_os(request, identificador):
     pdf.cell(0,10,f'{servico.data_entrega}',1,1,'L',1)
     pdf.cell(35,10,f'Protocolo',1,0,'L',1)
     pdf.cell(0,10,f'{servico.protocol}',1,1,'L',1)
-    
+
     pdf_content = pdf.output(dest='S').encode('latin1')
     pdf_bytes = BytesIO(pdf_content)
 

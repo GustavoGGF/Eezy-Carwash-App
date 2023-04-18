@@ -1,3 +1,7 @@
+body {
+  background: #13131a;
+}
+
 .card-dashboard {
   background-color: var(--main-color);
   width: 50%;

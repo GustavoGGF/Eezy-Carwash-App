@@ -38,6 +38,7 @@ def new_service(request):
 def list_service(request):
     if request.method == "GET":
         services = Service.objects.all()
+        print(type(services))
         return render(request, 'listar_servico.html', {'services': services})
 
     if request.method =='POST':
@@ -67,11 +68,17 @@ def list_service(request):
         return JsonResponse({'status': 'ok'})
 
 
-        if request.method == 'DELETE':
+    if request.method == 'DELETE':
 
-            pass
+        body = json.loads(request.body)
 
-            return JsonResponse({'status': 'ok'})
+        identificador = body['identificador']
+
+        servico = Service.objects.get(identificador=identificador)
+
+        servico.delete()
+
+        return JsonResponse({'status': 'ok'})
 
 # Tela dos serviços
 def service(request, identificador):

@@ -29,23 +29,23 @@ def clientes(request):
 
         # Validando nome
         if len(nome) < 3:
-            return render(request, 'clientes.html', {'sobrenome': sobrenome, 'email': email,'cpf':cpf, 'carros': zip(carros, placas, anos)})   
-        
+            return render(request, 'clientes.html', {'sobrenome': sobrenome, 'email': email,'cpf':cpf, 'carros': zip(carros, placas, anos)})
+
         # Validando sobrenome
         if len(sobrenome) == 0:
-            return render(request, 'clientes.html', {'nome':nome, 'email': email,'cpf':cpf, 'carros': zip(carros, placas, anos)})   
+            return render(request, 'clientes.html', {'nome':nome, 'email': email,'cpf':cpf, 'carros': zip(carros, placas, anos)})
 
         # Remove os caracteres não númericos do cpf
         cpf = ''.join(filter(str.isdigit, cpf))
 
         # Verifica se tem 11 digitos
         if len(cpf)!= 11:
-            return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'carros': zip(carros, placas, anos)})            
-        
+            return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'carros': zip(carros, placas, anos)})
+
         # Verifica se são iguais
         if cpf == cpf[0] * 11:
             return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'carros': zip(carros, placas, anos)})
-        
+
         # Calcula o primeiro dígito verificador
         soma = sum(int(cpf[i]) * (10 - i) for i in range(9))
         resto = soma % 11
@@ -53,11 +53,11 @@ def clientes(request):
             digito1 = 0
         else:
             digito1 = 11 - resto
-    
+
         # Verifica se o primeiro dígito verificador está correto
         if digito1 != int(cpf[9]):
             return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'carros': zip(carros, placas, anos)})
-        
+
         # Calcula o segundo dígito verificador
         soma = sum(int(cpf[i]) * (11 - i) for i in range(10))
         resto = soma % 11
@@ -65,7 +65,7 @@ def clientes(request):
             digito2 = 0
         else:
             digito2 = 11 - resto
-    
+
         # Verifica se o segundo dígito verificador está correto
         if digito2 != int(cpf[10]):
             return render(request, 'clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'carros': zip(carros, placas, anos)})
@@ -89,12 +89,12 @@ def clientes(request):
             cpf=cpf
         )
 
-        # Se não tiver nenhum dado inserido de carro, ai salva o cliente        
+        # Se não tiver nenhum dado inserido de carro, ai salva o cliente
         if len(carros) == 0 and len(placas) == 0 and len(anos) ==0:
             cliente.save()
 
         # Salvando a tabela cliente
-        
+
         # O zip serve para mesclar dados separados em grupos, assim identificando cada carro com seu respectivo cliente
         for carro, placa, ano in zip(carros, placas, anos):
             # Validando se os dados do carro foram inseridos
@@ -112,7 +112,7 @@ def clientes(request):
 # Tela de atualização de cliente
 
 
-def att_client(request):        
+def att_client(request):
         # selecionando o cliente que veio do select
         id_client = request.POST.get('id_cliente')
         cliente = Cliente.objects.filter(id=id_client)
@@ -167,7 +167,7 @@ def exclude_car(request, id):
 
 
 def update_client(request, id):
-    
+
     # Se a requisição for para deletar, executara o código a seguir
 
     if request.method == 'DELETE':
@@ -181,7 +181,7 @@ def update_client(request, id):
         Cliente.objects.filter(id=ide).delete()
 
         return render(request, 'clientes.html')
-    
+
     elif request.method == 'POST':
         # Pegando os dados que veio da function update_client do front
         body = json.loads(request.body)
@@ -214,7 +214,7 @@ def new_car(request):
             id = request.POST['id']
         except KeyError:
             return JsonResponse({'status': 'error', 'message': 'Missing required parameter: id'}, status=400)
-        
+
         # Vinculando o cliente com o id trazido do front
         cliente = get_object_or_404(Cliente, id=id)
 
@@ -239,4 +239,3 @@ def new_car(request):
 
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
-        

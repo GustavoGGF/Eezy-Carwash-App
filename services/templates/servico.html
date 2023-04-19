@@ -3,7 +3,47 @@
 {% endblock %} {% block 'dashboard' %}
 <br /><br />
 <div class="container">
-  <a href="{%url 'gerar_os' servico.identificador%}">gerar os</a
-  ><br />{{servico.titulo}}
+  <a
+    class="btn btn-primary w-100"
+    href="{%url 'gerar_os' servico.identificador%}"
+    >gerar os</a
+  ><br />
+  <h2 class="text-center" style="margin-top: 20px; margin-bottom: 20px">
+    {{servico.titulo}}
+  </h2>
+
+  <div class="d-flex flex-column bd-highlight">
+    <input
+      class="form-control"
+      type="text"
+      value="{{servico.cliente.nome}} {{servico.cliente.sobrenome}}"
+      style="margin-bottom: 15px"
+      disabled
+    />
+    <input
+      class="form-control"
+      style="margin-bottom: 15px"
+      type="text"
+      value="{{servico.data_inicio}}"
+      style="margin-bottom: 15px"
+      disabled
+    />
+    <input
+      class="form-control"
+      type="text"
+      value="{{servico.data_entrega}}"
+      style="margin-bottom: 15px"
+      disabled
+    />
+    <input
+      class="form-control"
+      type="text"
+      value="R$ {{servico.total_price}}"
+      style="margin-bottom: 15px"
+      disabled
+    />
+    <p class="form-control"></p>
+    <!-- TODO descrição -->
+  </div>
 </div>
 {%endblock%}

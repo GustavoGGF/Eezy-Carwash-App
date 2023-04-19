@@ -78,6 +78,13 @@ function createService() {
   var car = selectCar.options[selectCar.selectedIndex].value;
   const servicesSelect = [];
 
+  let incio = new Date(startDate);
+  let fim = new Date(endDate);
+
+  if (fim < incio) {
+    return;
+  }
+
   if (selectCar.value == "Escolha um veiculo") {
     return;
   }
@@ -125,9 +132,12 @@ function excludeService(botao) {
     "td:nth-of-type(1) a"
   ).textContent;
 
+  const csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
+
   fetch("/servicos/listar_servico/", {
     method: "DELETE",
     headers: {
+      "X-CSRFToken": csrf_token,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ identificador: identificador }),
@@ -136,7 +146,7 @@ function excludeService(botao) {
       return result.json();
     })
     .then(function (data) {
-      return data;
+      return window.location.reload();
     })
     .catch((err) => console.log(err));
 }

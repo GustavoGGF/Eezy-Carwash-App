@@ -145,7 +145,9 @@ function excludeService(botao) {
     .then(function (result) {
       return result.json();
     })
-    .then(function (data) {
+    .then(async function (data) {
+      await data;
+      console.log(data);
       return window.location.reload();
     })
     .catch((err) => console.log(err));

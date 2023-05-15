@@ -7,6 +7,7 @@ from client.models import Cliente, Carro
 from .choices import ChoicesMaintenanceCategory
 import json
 from datetime import datetime
+from django.core import serializers
 
 # Tela de novo serviço
 
@@ -86,11 +87,39 @@ def service(request, identificador):
 
     return render(request, 'servico.html', {'servico': service})
 
+
+# Tela de salvar serviço
+def salvar_os(request, identificador):
+    service = get_object_or_404(Service, identificador=identificador)
+    if request.method == 'POST':
+        try:
+            body = json.loads(request.body)
+            Description = body['descricao']
+            service.descricao += " " + Description
+            service.save()
+            serialized_service = {
+                'id': service.id,
+                'titulo': service.titulo,
+                'cliente': service.cliente.id if service.cliente else None,
+                'data_inicio': service.data_inicio.isoformat() if service.data_inicio else None,
+                'data_entrega': service.data_entrega.isoformat() if service.data_entrega else None,
+                'finalizado': service.finalizado,
+                'protocol': service.protocol,
+                'identificador': service.identificador,
+                'descricao': service.descricao,
+            }
+            return JsonResponse({'status': 'ok', 'servico': serialized_service})
+        except json.JSONDecodeError as e:
+            return JsonResponse({'error': 'Método não permitido'}, status=405)
+    # return HttpResponse('Metodo não permitido', status=405)
+
 # Tela da geração de ordem de serviço
 def gerar_os(request, identificador):
+    print(request.method)
     servico = get_object_or_404(Service, identificador=identificador)
 
-    # TODO estilizar melhor esse pdf
+    # TODO separar as descrição e colocar uma de baixo da outra
+
     pdf = FPDF()
     pdf.add_page()
 
@@ -114,7 +143,8 @@ def gerar_os(request, identificador):
     pdf.cell(0,10,f'{servico.data_entrega}',1,1,'L',1)
     pdf.cell(35,10,f'Protocolo',1,0,'L',1)
     pdf.cell(0,10,f'{servico.protocol}',1,1,'L',1)
-
+    pdf.cell(50,10,f'Descrição dos serviços',1,0,'L',1)
+    pdf.cell(0,10,f'{servico.descricao}',1,1, 'L',1)
     pdf_content = pdf.output(dest='S').encode('latin1')
     pdf_bytes = BytesIO(pdf_content)
 

@@ -30,6 +30,7 @@ class Service(models.Model):
     finalizado = models.BooleanField(default=False)
     protocol = models.CharField(max_length=52, null=True, blank=True)
     identificador = models.CharField(max_length=24, null=True, blank=True)
+    descricao = models.TextField(null=True, blank=True)
 
     def __str__(self) -> str:
         return self.titulo

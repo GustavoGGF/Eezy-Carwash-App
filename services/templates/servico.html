@@ -1,49 +1,76 @@
 {% extends "index.html" %} {% load static %} {% block 'head' %}
 <link rel="stylesheet" href="{% static 'clientes/css/clientes.css' %}" />
+<script defer src="{% static 'services/js/os.js' %}"></script>
 {% endblock %} {% block 'dashboard' %}
 <br /><br />
-<div class="container">
-  <a
-    class="btn btn-primary w-100"
-    href="{%url 'gerar_os' servico.identificador%}"
-    >gerar os</a
-  ><br />
-  <h2 class="text-center" style="margin-top: 20px; margin-bottom: 20px">
-    {{servico.titulo}}
-  </h2>
-
-  <div class="d-flex flex-column bd-highlight">
+<form action="{%url 'gerar_os' servico.identificador%}">
+  {%csrf_token%}
+  <div class="container">
+    <input type="submit" class="btn btn-primary w-100" value="gerar os" />
+    <h2 class="text-center" style="margin-top: 20px; margin-bottom: 20px">
+      {{servico.titulo}}
+    </h2>
     <input
-      class="form-control"
-      type="text"
-      value="{{servico.cliente.nome}} {{servico.cliente.sobrenome}}"
-      style="margin-bottom: 15px"
-      disabled
+      id="identificador"
+      class="hidden"
+      value="{{servico.identificador}}"
     />
-    <input
-      class="form-control"
-      style="margin-bottom: 15px"
-      type="text"
-      value="{{servico.data_inicio}}"
-      style="margin-bottom: 15px"
-      disabled
-    />
-    <input
-      class="form-control"
-      type="text"
-      value="{{servico.data_entrega}}"
-      style="margin-bottom: 15px"
-      disabled
-    />
-    <input
-      class="form-control"
-      type="text"
-      value="R$ {{servico.total_price}}"
-      style="margin-bottom: 15px"
-      disabled
-    />
-    <p class="form-control"></p>
-    <!-- TODO descrição -->
+    <div class="d-flex flex-column bd-highlight">
+      <span>Cliente</span>
+      <input
+        class="form-control"
+        type="text"
+        value="{{servico.cliente.nome}} {{servico.cliente.sobrenome}}"
+        style="margin-bottom: 15px"
+        disabled
+      />
+      <span>Data que o cliente entregou o veiculo</span>
+      <input
+        class="form-control"
+        style="margin-bottom: 15px"
+        type="text"
+        value="{{servico.data_inicio}}"
+        style="margin-bottom: 15px"
+        disabled
+      />
+      <span>Data que o cliente recolherá o veiculo</span>
+      <input
+        class="form-control"
+        type="text"
+        value="{{servico.data_entrega}}"
+        style="margin-bottom: 15px"
+        disabled
+      />
+      <span>Valor do serviço</span>
+      <input
+        class="form-control"
+        type="text"
+        value="R$ {{servico.total_price}}"
+        style="margin-bottom: 15px"
+        disabled
+      />
+      <span>Serviços realizados até o momento</span>
+      <input
+        type="text"
+        value="{{servico.descricao}}"
+        class="form-control"
+        disabled
+      />
+      <span>Descrição de serviço feito</span>
+      <textarea
+        id="description"
+        class="no-resize"
+        name="description"
+        rows="6"
+        value="{{servico.descricao}}"
+      ></textarea>
+    </div>
   </div>
-</div>
+  <div class="text-center mt-2 mb-2">
+    <button class="btn btn-success" onclick="postDescription()" type="button">
+      Salvar
+    </button>
+  </div>
+</form>
+
 {%endblock%}

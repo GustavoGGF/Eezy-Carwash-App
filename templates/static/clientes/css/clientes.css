@@ -115,6 +115,10 @@ body {
   border-radius: 10px;
 }
 
+.no-resize {
+  resize: none;
+}
+
 @media (max-width: 580px) {
   .message {
     left: 20%;

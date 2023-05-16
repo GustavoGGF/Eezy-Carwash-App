@@ -251,7 +251,6 @@ function hideMessage() {
 }
 
 // função para criar a tela de excluir cliente
-// id = document.getElementById("excludeId").value;
 function exlude_cliente() {
   // pegando dados do input
   nome = document.getElementById("exludeName").value;
@@ -285,7 +284,7 @@ function exlude_cliente() {
         email = data["email"];
         cpf = data["cpf"];
         id = data["id"];
-        console.log("Dados alterados com sucesso"); //TODO atualizar e deixa com o cliente atualizado selecionado no select
+        console.log("Dados alterados com sucesso");
       } else {
         console.log("Ocorreu um erro inesperado no servidor de dados");
       }
@@ -336,7 +335,7 @@ function update_client() {
         sobrenome = data["sobrenome"];
         email = data["email"];
         cpf = data["cpf"];
-        console.log("Dados alterados com sucesso"); //TODO atualizar e deixa com o cliente atualizado selecionado no select
+        console.log("Dados alterados com sucesso");
       } else {
         console.log("Ocorreu um erro inesperado no servidor de dados");
       }

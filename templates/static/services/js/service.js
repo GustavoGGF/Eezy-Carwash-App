@@ -65,7 +65,7 @@ selectService.addEventListener("change", () => {
       });
   }
 });
-
+// Criar serviço
 function createService() {
   // pegando o id
   var id = selectService.options[selectService.selectedIndex].value;
@@ -126,7 +126,7 @@ function createService() {
     })
     .catch((err) => console.log(err));
 }
-
+// Escluir serviço
 function excludeService(botao) {
   var identificador = botao.parentNode.parentNode.querySelector(
     "td:nth-of-type(1) a"

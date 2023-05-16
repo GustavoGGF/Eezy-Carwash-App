@@ -154,7 +154,7 @@ def update_car(request, id):
 # Tela de exclusão de carro
 
 
-def exclude_car(request, id):
+def exclude_car(id):
     try:
         carro = Carro.objects.get(id=id)
         carro.delete()
@@ -198,7 +198,7 @@ def update_client(request, id):
         try:
             cliente.nome = nome
             cliente.sobrenome = sobrenome
-            cliente.email = email  # TODO verificar se os dados estão corretos
+            cliente.email = email
             cliente.cpf = cpf
             cliente.save()
             return JsonResponse({'status': '200', 'nome': nome, 'sobrenome': sobrenome, 'email': email, 'cpf': cpf})

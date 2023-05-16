@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, FileResponse, JsonResponse
+from django.http import FileResponse, JsonResponse
 from .models import Service, MaintenanceCategory
 from fpdf import FPDF
 from io import BytesIO
@@ -7,7 +7,6 @@ from client.models import Cliente, Carro
 from .choices import ChoicesMaintenanceCategory
 import json
 from datetime import datetime
-from django.core import serializers
 
 # Tela de novo serviço
 
@@ -37,6 +36,7 @@ def new_service(request):
 
 # Tela da lista de serviço
 def list_service(request):
+    #* Se o metodo for de requisição, mostra o serviço na tela
     if request.method == "GET":
         services = Service.objects.all()
         print(type(services))
@@ -87,7 +87,6 @@ def service(request, identificador):
 
     return render(request, 'servico.html', {'servico': service})
 
-
 # Tela de salvar serviço
 def salvar_os(request, identificador):
     service = get_object_or_404(Service, identificador=identificador)
@@ -111,14 +110,12 @@ def salvar_os(request, identificador):
             return JsonResponse({'status': 'ok', 'servico': serialized_service})
         except json.JSONDecodeError as e:
             return JsonResponse({'error': 'Método não permitido'}, status=405)
-    # return HttpResponse('Metodo não permitido', status=405)
+    return JsonResponse({'status': '200'}, status=200)
 
-# Tela da geração de ordem de serviço
+# Tela de geração do pdf da ordem de serviço
 def gerar_os(request, identificador):
     print(request.method)
     servico = get_object_or_404(Service, identificador=identificador)
-
-    # TODO separar as descrição e colocar uma de baixo da outra
 
     pdf = FPDF()
     pdf.add_page()

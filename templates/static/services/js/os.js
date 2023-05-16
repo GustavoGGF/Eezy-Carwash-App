@@ -1,3 +1,4 @@
+// Código para que a descrição seja incluida no banco
 async function postDescription() {
   const descricao = await document.getElementById("description").value;
   const identificador = await document.getElementById("identificador").value;
